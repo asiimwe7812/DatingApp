@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "tonight-3.0",
-    "slug": "tonight-3.0",
+    "scheme": "tonight-3.0",
+    "slug": "tonight-3-0",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +22,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "host.exp.exponent"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7c33a65c-3a07-4e19-b2df-c0e5110586bc"
+      }
+    },
+    "owner": "ivan7610"
   }
 }
