@@ -6,6 +6,7 @@ import ChatScreen from './Screens/ChatScreen'
 import LoginScreen from './Screens/LoginScreen'
 import useAuth from './Hooks/useAuth'
 import { Header } from 'react-native/Libraries/NewAppScreen'
+import ModalScreen from './Screens/ModalScreen'
 const Stack = createNativeStackNavigator()
 
 const StackNavigator = () => {
@@ -14,8 +15,12 @@ const StackNavigator = () => {
     <Stack.Navigator ScreenOptions={{headershown:false}}>
         {user ? (
             <>
-        <Stack.Screen name= "Home" component={HomeScreen}/>
-        <Stack.Screen name= "Chat"component={ChatScreen}/></>):(
+            <Stack.Group><Stack.Screen name= "Home" component={HomeScreen}/>
+        <Stack.Screen name= "Chat"component={ChatScreen}/></Stack.Group>
+        <Stack.Group  screenOptions={{presentation:"modal"}}>
+        <Stack.Screen name= "Profile"component={ModalScreen}/>
+        </Stack.Group>
+        </>):(
         <Stack.Screen name="Login" component={LoginScreen}/>)}
     </Stack.Navigator>
   )

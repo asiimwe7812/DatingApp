@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user: "John", signInWithGoogle }}>
+    <AuthContext.Provider value={{ user: null, signInWithGoogle }}>
       {children}
     </AuthContext.Provider>
   );

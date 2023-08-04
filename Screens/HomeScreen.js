@@ -57,8 +57,9 @@ const HomeScreen = () => {
         <TouchableOpacity >
           <Image style={{height:30,width:30,borderRadius:25,marginLeft:5}} source={{uri:"https://media.licdn.com/dms/image/D4E03AQGpUc124DKMsA/profile-displayphoto-shrink_800_800/0/1666191863047?e=2147483647&v=beta&t=_H4jKgJcC4M-mfimcZAEfN1UbRAhxrfwETNjW_LmdDI"}} />
         </TouchableOpacity>
-        <TouchableOpacity>
-        <Image style={{height:20,width:20}} source={require("../assets/logo.jpg")}/>
+        <TouchableOpacity onPress={()=>navigation.navigate("Profile")} style={{backgroundColor:"green", height:30, width:120, borderRadius:15,justifyContent:"center",alignItems:"center"}}>
+        {/* <Image style={{height:20,width:20}} source={require("../assets/logo.jpg")}/> */}
+        <Text style={{alignItems:"center",justifyContent:"center",color:"white"}}>Create Account</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={()=>navigation.navigate("Chat")}>
         <Ionicons name='chatbubbles-sharp' size={30} color="green"/>
