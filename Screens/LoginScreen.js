@@ -112,6 +112,7 @@ import { ImageBackground } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { TouchableOpacity } from 'react-native';
 import * as LocalAuthentication from 'expo-local-authentication';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 const LoginScreen = () => {
   const tw = useTailwind();
@@ -144,10 +145,13 @@ const LoginScreen = () => {
       },
     ]);
   };
+  const handlePress =()=>{
+    navigation.navigate("Home")
+  }
 
   const TwoButtonAlert = () => {
     Alert.alert(
-      'Welcome to Biometric App',
+      'Press OK to Proceed ',
       '',
       [
         {
@@ -157,7 +161,8 @@ const LoginScreen = () => {
         },
         {
           text: 'OK',
-          onPress: () => navigation.navigate('Chat'),
+          onPress:()=>navigation.navigate("Home")
+           
         },
       ],
       { cancelable: false }
@@ -190,7 +195,7 @@ const LoginScreen = () => {
 
     if (biometricAuth.success) {
       TwoButtonAlert();
-      ()=>navigation.navigate('Home'); // Navigates to the "Home" screen on successful authentication
+      ; // Navigates to the "Home" screen on successful authentication
     }
 
     console.log({ isBiometricAvailable });
@@ -204,7 +209,7 @@ const LoginScreen = () => {
       <ImageBackground
         resizeMode="cover"
         style={{ flex: 1 }}
-        source={{ uri: 'https://i1.sndcdn.com/artworks-O8rY5qIyjmoW-0-t500x500.jpg' }}
+        source={{ uri: 'https://i.pinimg.com/474x/16/40/b7/1640b7d3abcff711b3807a5aa8f0a49d.jpg' }}
       >
         <TouchableOpacity
           style={{

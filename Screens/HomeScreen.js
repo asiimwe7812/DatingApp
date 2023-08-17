@@ -1,11 +1,13 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'
-import React, { useRef } from 'react'
+import React, { useLayoutEffect, useRef, useState } from 'react'
 import { Button } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import useAuth from '../Hooks/useAuth'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {AntDesign,Entypo,Ionicons} from "@expo/vector-icons"
 import Swiper from 'react-native-deck-swiper'
+import {doc,onSnapshot} from '@firebase/firestore'
+import {db} from '../firebase'
 const DUMMY_DATA=[
   {
     firstName:"Asiimwe",
@@ -46,6 +48,15 @@ const HomeScreen = () => {
     const navigation =useNavigation()
     const {logout,user} =useAuth()
     const swipeRef =useRef(null)
+    const [profiles ,setProfiles]=useState([])
+    // useLayoutEffect(()=>{
+    //  const unsub = onSnapshot(doc(db,'users',user.uid),snapshot =>{
+    //     if(!snapshot.exists){
+    //       navigation.navigate("Modal")
+    //     }
+    //   });
+    //   return unsub();
+    // },[])
 
   return (
     <SafeAreaView style={{flex:1}}>
@@ -54,7 +65,7 @@ const HomeScreen = () => {
 
       <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
 
-        <TouchableOpacity >
+        <TouchableOpacity  onPress={logout}>
           <Image style={{height:30,width:30,borderRadius:25,marginLeft:5}} source={{uri:"https://media.licdn.com/dms/image/D4E03AQGpUc124DKMsA/profile-displayphoto-shrink_800_800/0/1666191863047?e=2147483647&v=beta&t=_H4jKgJcC4M-mfimcZAEfN1UbRAhxrfwETNjW_LmdDI"}} />
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>navigation.navigate("Profile")} style={{backgroundColor:"green", height:30, width:120, borderRadius:15,justifyContent:"center",alignItems:"center"}}>
@@ -66,7 +77,7 @@ const HomeScreen = () => {
       </TouchableOpacity>
       </View>
       <View style={{flex:1,marginTop:-6}}>
-<Swiper cards={DUMMY_DATA} 
+<Swiper cards={profiles} 
 ref={swipeRef}
 stackSize={5}
 cardIndex={0}
@@ -96,7 +107,7 @@ overlayLabels={{
 
 }}
 containerStyle={{backgroundColor:"transparent"}}
-renderCard={(card)=>(<View key={card.id} style={{backgroundColor:"pink",borderRadius:15,flex:0.75,position:"relative"}}>
+renderCard={(card)=> card ? (<View key={card.id} style={{backgroundColor:"pink",borderRadius:15,flex:0.75,position:"relative"}}>
 <Image style={{height:"100%",width:"100%", borderRadius:15}} source={{uri:card.photoURL}}/>
 <View style={{backgroundColor:"white",height:80,width:"100%",position:"absolute",bottom:0,justifyContent:"space-between",alignItems:"center",flexDirection:"row",padding:2,borderRadius:15}} >
   <View>
@@ -105,13 +116,20 @@ renderCard={(card)=>(<View key={card.id} style={{backgroundColor:"pink",borderRa
   </View>
   <Text style={{fontWeight:"bold", marginRight:10}}>{card.Age}</Text>
 </View>
-</View>)}/>
+</View>):(
+  <View style={{backgroundColor:"pink",borderRadius:15,flex:0.75,position:"relative"}}>
+    <Text style={{fontWeight:"bold",padding:5}}>No more Profiles</Text>
+
+<Image style={{height:"100%",width:"100%", borderRadius:15}} source={{uri:"https://cdn.iconscout.com/icon/free/png-256/free-wow-20-894767.png"}}/>
+  </View>
+)}/>
 </View>
 <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
   <TouchableOpacity onPress={()=>swipeRef.current.swipeLeft()} style={{alignItems:"center",width:30,height:30,backgroundColor:"#ffb6c1",borderRadius:15,justifyContent:"center"}}>
     <Entypo name='cross' size={23} color="red"/>
   </TouchableOpacity>
-  <TouchableOpacity onPress={()=>swipeRef.current.swipeRight()} style={{alignItems:"center",width:30,height:30,backgroundColor:"#90ee90",borderRadius:15,justifyContent:"center"}}>
+  <TouchableOpacity onPress={()=>swipeRef.current.swipeRight()} 
+  style={{alignItems:"center",width:30,height:30,backgroundColor:"#90ee90",borderRadius:15,justifyContent:"center"}}>
     <AntDesign name='heart' size={23} color="green"/>
   </TouchableOpacity>
 </View>

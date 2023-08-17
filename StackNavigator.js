@@ -4,24 +4,22 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import HomeScreen from './Screens/HomeScreen'
 import ChatScreen from './Screens/ChatScreen'
 import LoginScreen from './Screens/LoginScreen'
-import useAuth from './Hooks/useAuth'
-import { Header } from 'react-native/Libraries/NewAppScreen'
 import ModalScreen from './Screens/ModalScreen'
+import { Header } from 'react-native/Libraries/NewAppScreen'
+import useAuth from './Hooks/useAuth'
+
 const Stack = createNativeStackNavigator()
 
 const StackNavigator = () => {
- const {user} =useAuth();
+  const { user } = useAuth();
+
   return (
-    <Stack.Navigator ScreenOptions={{headershown:false}}>
-        {user ? (
-            <>
-            <Stack.Group><Stack.Screen name= "Home" component={HomeScreen}/>
-        <Stack.Screen name= "Chat"component={ChatScreen}/></Stack.Group>
-        <Stack.Group  screenOptions={{presentation:"modal"}}>
-        <Stack.Screen name= "Profile"component={ModalScreen}/>
-        </Stack.Group>
-        </>):(
-        <Stack.Screen name="Login" component={LoginScreen}/>)}
+    <Stack.Navigator ScreenOptions={{ headershown: false }}>
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Chat" component={ChatScreen} />
+      <Stack.Screen name="Profile" component={ModalScreen} options={{ presentation: 'modal' }} />
+    
     </Stack.Navigator>
   )
 }
